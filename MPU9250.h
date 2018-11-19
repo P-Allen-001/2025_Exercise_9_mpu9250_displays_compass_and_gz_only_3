@@ -4,7 +4,7 @@
 #include "mbed.h"
 #include "math.h"
 
-#define USE_ISR 1   // poll or data ready interrupt   
+#define USE_ISR 0   // poll or data ready interrupt   
 
 // See also MPU-9250 Register Map and Descriptions, Revision 4.0, RM-MPU-9250A-00, Rev. 1.4, 9/9/2013 for registers not listed in 
 // above document; the MPU9250 and MPU9150 are virtually identical but the latter has a different register map
