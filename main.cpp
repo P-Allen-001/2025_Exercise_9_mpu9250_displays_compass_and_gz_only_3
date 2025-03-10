@@ -1,4 +1,7 @@
-/* MPU9250 Basic Example Code
+/*
+2025 Exercise 9, Paul Allen ENGR7023
+
+ MPU9250 Basic Example Code
  by: Kris Winer
  date: April 1, 2014
  license: Beerware - Use this code however you'd like. If you
@@ -57,7 +60,7 @@ int main()
     //Set up I2C
     i2c.frequency(400000);  // use fast (400 kHz) I2C
 
-    pc.printf("CPU SystemCoreClock is %d Hz\r\n", SystemCoreClock);
+ //   pc.printf("CPU SystemCoreClock is %d Hz\r\n", SystemCoreClock);
 
     t.start();
     isrPin.rise(&mpuisr);
@@ -74,23 +77,23 @@ int main()
 
         mpu9250.resetMPU9250(); // Reset registers to default in preparation for device calibration
         mpu9250.calibrateMPU9250(gyroBias, accelBias); // Calibrate gyro and accelerometers, load biases in bias registers
-        pc.printf("x gyro bias = %f\n\r", gyroBias[0]);
-        pc.printf("y gyro bias = %f\n\r", gyroBias[1]);
-        pc.printf("z gyro bias = %f\n\r", gyroBias[2]);
-        pc.printf("x accel bias = %f\n\r", accelBias[0]);
-        pc.printf("y accel bias = %f\n\r", accelBias[1]);
-        pc.printf("z accel bias = %f\n\r", accelBias[2]);
+ //       pc.printf("x gyro bias = %f\n\r", gyroBias[0]);
+ //       pc.printf("y gyro bias = %f\n\r", gyroBias[1]);
+//        pc.printf("z gyro bias = %f\n\r", gyroBias[2]);
+//        pc.printf("x accel bias = %f\n\r", accelBias[0]);
+ //       pc.printf("y accel bias = %f\n\r", accelBias[1]);
+ //       pc.printf("z accel bias = %f\n\r", accelBias[2]);
         wait(2);
         mpu9250.initMPU9250();
         pc.printf("MPU9250 initialized for active data mode....\n\r"); // Initialize device for active mode read of acclerometer, gyroscope, and temperature
         mpu9250.initAK8963(magCalibration);
-        pc.printf("AK8963 initialized for active data mode....\n\r"); // Initialize device for active mode read of magnetometer
-        pc.printf("Accelerometer full-scale range = %f  g\n\r", 2.0f*(float)(1<<Ascale));
-        pc.printf("Gyroscope full-scale range = %f  deg/s\n\r", 250.0f*(float)(1<<Gscale));
-        if(Mscale == 0) pc.printf("Magnetometer resolution = 14  bits\n\r");
-        if(Mscale == 1) pc.printf("Magnetometer resolution = 16  bits\n\r");
-        if(Mmode == 2) pc.printf("Magnetometer ODR = 8 Hz\n\r");
-        if(Mmode == 6) pc.printf("Magnetometer ODR = 100 Hz\n\r");
+ //       pc.printf("AK8963 initialized for active data mode....\n\r"); // Initialize device for active mode read of magnetometer
+ //       pc.printf("Accelerometer full-scale range = %f  g\n\r", 2.0f*(float)(1<<Ascale));
+ //       pc.printf("Gyroscope full-scale range = %f  deg/s\n\r", 250.0f*(float)(1<<Gscale));
+ //       if(Mscale == 0) pc.printf("Magnetometer resolution = 14  bits\n\r");
+ //       if(Mscale == 1) pc.printf("Magnetometer resolution = 16  bits\n\r");
+ //       if(Mmode == 2) pc.printf("Magnetometer ODR = 8 Hz\n\r");
+//        if(Mmode == 6) pc.printf("Magnetometer ODR = 100 Hz\n\r");
         wait(2);
     } else {
         pc.printf("Could not connect to MPU9250: \n\r");
@@ -103,12 +106,12 @@ int main()
     mpu9250.getAres(); // Get accelerometer sensitivity
     mpu9250.getGres(); // Get gyro sensitivity
     mpu9250.getMres(); // Get magnetometer sensitivity
-    pc.printf("Accelerometer sensitivity is %f LSB/g \n\r", 1.0f/aRes);
-    pc.printf("Gyroscope sensitivity is %f LSB/deg/s \n\r", 1.0f/gRes);
-    pc.printf("Magnetometer sensitivity is %f LSB/G \n\r", 1.0f/mRes);
-    magbias[0] = +470.;  // User environmental x-axis correction in milliGauss, should be automatically calculated
-    magbias[1] = +120.;  // User environmental x-axis correction in milliGauss
-    magbias[2] = +125.;  // User environmental x-axis correction in milliGauss
+ //   pc.printf("Accelerometer sensitivity is %f LSB/g \n\r", 1.0f/aRes);
+ //   pc.printf("Gyroscope sensitivity is %f LSB/deg/s \n\r", 1.0f/gRes);
+ //   pc.printf("Magnetometer sensitivity is %f LSB/G \n\r", 1.0f/mRes);
+    magbias[0] = -90.;  // User environmental x-axis correction in milliGauss, should be automatically calculated
+    magbias[1] = 120.;  // User environmental x-axis correction in milliGauss
+    magbias[2] = 0.;  // User environmental x-axis correction in milliGauss
 
     while(1) {
         static int readycnt=0;
@@ -151,7 +154,7 @@ int main()
 
 //    if(lastUpdate - firstUpdate > 10000000.0f) {
 //     beta = 0.04;  // decrease filter gain after stabilized
-//     zeta = 0.015; // increasey bias drift gain after stabilized
+//     zeta = 0.015; // increase bias drift gain after stabilized
 //   }
 
         // Pass gyro rate as rad/s
@@ -163,28 +166,28 @@ int main()
         // Serial print and/or display at 0.5 s rate independent of data rates
         delt_t = t.read_ms() - count;
         if (delt_t > 500) { // update LCD once per half-second independent of read rate
-            pc.printf("readycnt %d us %d\n",readycnt,us);
+ //           pc.printf("readycnt %d us %d\n",readycnt,us);
             readycnt=0;
-            pc.printf("ax = %f", 1000*ax);
-            pc.printf(" ay = %f", 1000*ay);
-            pc.printf(" az = %f  mg\n\r", 1000*az);
+  //          pc.printf("ax = %f", 1000*ax);
+  //          pc.printf(" ay = %f", 1000*ay);
+ //           pc.printf(" az = %f  mg\n\r", 1000*az);
 
-            pc.printf("gx = %f", gx);
-            pc.printf(" gy = %f", gy);
-            pc.printf(" gz = %f  deg/s\n\r", gz);
+ //           pc.printf("gx = %0.0f", gx);
+ //           pc.printf(" gy = %0.0f", gy);
+            pc.printf(" gz = %0.0f  deg/s\n\r", gz);
 
-            pc.printf("gx = %f", mx);
-            pc.printf(" gy = %f", my);
-            pc.printf(" gz = %f  mG\n\r", mz);
+  //          pc.printf("gx = %f", mx);
+  //          pc.printf(" gy = %f", my);
+ //           pc.printf(" gz = %f  mG\n\r", mz);
 
             tempCount = mpu9250.readTempData();  // Read the adc values
             temperature = ((float) tempCount) / 333.87f + 21.0f; // Temperature in degrees Centigrade
-            pc.printf("temperature = %f  C\n\r", temperature);
+  //          pc.printf("temperature = %f  C\n\r", temperature);
 
-            pc.printf("q0 = %f\n\r", q[0]);
-            pc.printf("q1 = %f\n\r", q[1]);
-            pc.printf("q2 = %f\n\r", q[2]);
-            pc.printf("q3 = %f\n\r", q[3]);
+ //           pc.printf("q0 = %f\n\r", q[0]);
+ //           pc.printf("q1 = %f\n\r", q[1]);
+ //           pc.printf("q2 = %f\n\r", q[2]);
+//            pc.printf("q3 = %f\n\r", q[3]);
 
 
 
@@ -205,8 +208,11 @@ int main()
             yaw   -= 13.8f; // Declination at Danville, California is 13 degrees 48 minutes and 47 seconds on 2014-04-04
             roll  *= 180.0f / PI;
 
-            pc.printf("Yaw, Pitch, Roll: %f %f %f\n\r", yaw, pitch, roll);
-            pc.printf("average rate = %f\n\r", (float) sumCount/sum);
+//            pc.printf("Yaw, Pitch, Roll: %f %f %f\n\r", yaw, pitch, roll);
+            
+            pc.printf("Direction: %0.0f\n\r", yaw );
+            
+//            pc.printf("average rate = %f\n\r", (float) sumCount/sum);
 
             myled= !myled;
             count = t.read_ms();
